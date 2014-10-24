@@ -46,7 +46,6 @@ class OVA(object):
             for network in networkSection.findall('ovf:Network', OVA.namespace):
                 return network.get('{%s}name' % OVA.namespace['ovf'])
 
-
     def parseVirtualSystem(self, virtualSystem):
         response = []
         if virtualSystem is not None:
