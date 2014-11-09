@@ -58,12 +58,16 @@ class OVA(object):
                         label = property.find('{%s}Label' % OVA.namespace['ovf'])
                         description = property.find('{%s}Description' % OVA.namespace['ovf'])
                         key = property.get('{%s}key' % OVA.namespace['ovf'])
-                        response.append(OVA.OVFProperty(category=category.text,
+                        try:
+                            response.append(OVA.OVFProperty(category=category.text,
                                                     label=label.text,
                                                     description=description.text,
                                                     key=key,
                                                     _class=_class,
                                                     instance=instance))
+                        except AttributeError as e:
+                            pass
+
             for vService in virtualSystem.findall('vmw:vServiceDependencySection', OVA.namespace):
                 id = vService.get('{%s}id' % OVA.namespace['vmw'])
                 response.append(OVA.VServiceDependency(id=id))
